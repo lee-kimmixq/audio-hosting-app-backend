@@ -1,4 +1,5 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { FRONTEND_URL, PORT } from './config'
 import { bindRoutes } from './routes'
@@ -15,6 +16,7 @@ app.use(
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(cookieParser())
 
 app.get('/test', (_, res) => {
   res.send('TEST works')
