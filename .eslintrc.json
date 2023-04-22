@@ -5,6 +5,9 @@
     },
     "extends": [
         "airbnb-base",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
@@ -18,7 +21,11 @@
     "rules": {
         "import/prefer-default-export": "off",
         "import/extensions": "off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-var-requires": {
+            "extensions": [".ts", ".tsx"]
+        }
     },
     "settings": {
         "import/resolver": {

@@ -1,15 +1,14 @@
 import express from 'express'
 import cors from 'cors'
-import './config'
-
-const { FRONTEND_URL } = process.env
+import { FRONTEND_URL, PORT } from './config'
+import { bindRoutes } from './routes'
 
 const app = express()
 
 app.use(
   cors({
     credentials: true,
-    origin: FRONTEND_URL,
+    origin: FRONTEND_URL!,
   })
 )
 
@@ -21,5 +20,6 @@ app.get('/test', (_, res) => {
   res.send('TEST works')
 })
 
-const PORT = process.env.PORT || 3000
+bindRoutes(app)
+
 app.listen(PORT)

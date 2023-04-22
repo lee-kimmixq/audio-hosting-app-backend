@@ -1,16 +1,21 @@
 import { Sequelize } from 'sequelize'
-import sequelizeConfig from '../config'
+import {
+  HOST,
+  POSTGRES_DB,
+  POSTGRES_PASSWORD,
+  POSTGRES_USER,
+} from '../../config'
 
-import { initUserModel } from './user'
-
-const { NODE_ENV = 'development' } = process.env
-const config = sequelizeConfig[NODE_ENV]
+import { initUserModel } from './user.model'
 
 export const sequelize = new Sequelize(
-  config?.database,
-  config?.username,
-  config?.password,
-  config
+  POSTGRES_DB!,
+  POSTGRES_USER!,
+  POSTGRES_PASSWORD!,
+  {
+    host: HOST!,
+    dialect: 'postgres',
+  }
 )
 
 const db = {
