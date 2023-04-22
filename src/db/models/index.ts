@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize'
-import { sequelizeConfig } from '../config'
+import sequelizeConfig from '../config'
+
+import { initUserModel } from './user'
 
 const { NODE_ENV = 'development' } = process.env
 const config = sequelizeConfig[NODE_ENV]
@@ -14,6 +16,7 @@ export const sequelize = new Sequelize(
 const db = {
   sequelize,
   Sequelize,
+  User: initUserModel(sequelize),
 }
 
 export { db }
