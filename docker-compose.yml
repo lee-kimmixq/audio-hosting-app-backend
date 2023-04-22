@@ -18,15 +18,15 @@ services:
     container_name: 'postgres'
     image: public.ecr.aws/docker/library/postgres:14.3-alpine
     environment:
-      - POSTGRES_USER=test_pg
-      - POSTGRES_PASSWORD=test_pg
-      - POSTGRES_DB=audio_hosting_app_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - '5432:5432'
     volumes:
       - ./db:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U test -d example']
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
       interval: 5s
       timeout: 5s
       retries: 5
