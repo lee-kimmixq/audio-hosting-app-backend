@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      - DEBUG=${DEBUG-}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=s3
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  postgres:
+    container_name: 'postgres'
+    image: public.ecr.aws/docker/library/postgres:14.3-alpine
+    environment:
+      - POSTGRES_USER=test_pg
+      - POSTGRES_PASSWORD=test_pg
+      - POSTGRES_DB=audio_hosting_app_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U test -d example']
+      interval: 5s
+      timeout: 5s
+      retries: 5

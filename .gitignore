@@ -1,0 +1,7 @@
+db/
+volume/
+
+node_modules/
+build/
+
+.env
