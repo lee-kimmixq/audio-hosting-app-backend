@@ -1,5 +1,6 @@
 import { Response } from 'express'
-import { RequestWithUserContext } from '../types/shared.types'
+import { EFileStatus, RequestWithUserContext } from '../types/shared.types'
+import { Error } from '../errors'
 
 export interface IFileController {
   index: (req: RequestWithUserContext, res: Response) => Promise<void>
@@ -44,14 +45,24 @@ export const initFileController = (db: any): IFileController => {
 
   const create = async (req: RequestWithUserContext, res: Response) => {
     const userId = req.context?.user?.id
-    const { description, path } = req.body
+    const { description, path, categoryId } = req.body
+
+    const category = await db.Category.findByPk(categoryId)
+    if (!category) {
+      res
+        .status(Error.CATEGORY_NOT_FOUND.httpCode)
+        .send(Error.CATEGORY_NOT_FOUND)
+      return
+    }
 
     try {
       const file = await db.File.create({
         userId,
         description,
         path,
+        status: EFileStatus.UPLOADING,
       })
+      await file.setCategories([categoryId])
       res.send({ file })
     } catch (err) {
       res.status(500).send(err)

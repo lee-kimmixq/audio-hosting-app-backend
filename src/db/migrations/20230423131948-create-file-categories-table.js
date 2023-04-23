@@ -3,9 +3,9 @@ module.exports = {
     await queryInterface.createTable('file_categories', {
       id: {
         primaryKey: true,
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
         allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
       },
       file_id: {
         type: Sequelize.UUID,

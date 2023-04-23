@@ -9,3 +9,9 @@ export interface RequestWithUserContext extends Request {
     user: JwtPayload
   }
 }
+
+export enum EFileStatus {
+  UPLOADING = 'UPLOADING',
+  UPLOADED = 'UPLOADED',
+  DELETED = 'DELETED',
+}

@@ -29,4 +29,9 @@ export const Error = {
     code: 'AHA-INVALID-OPERATION',
     message: 'Invalid operation',
   },
+  CATEGORY_NOT_FOUND: {
+    httpCode: 400,
+    code: 'AHA-CATEGORY-NOT-FOUND',
+    message: 'Category not found',
+  },
 }
