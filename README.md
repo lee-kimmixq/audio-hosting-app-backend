@@ -2,19 +2,24 @@
 
 ## To start up local server
 1. Ensure you have the required environment variables in `.env`
-2. Install npm packages
+2. Ensure that no other local instances of PostgreSQL are running
+3. Install npm packages
     ```
     npm install
     ```
-3. Start up Docker
+4. Clean volumes
+    ```
+    npm run clean
+    ```
+5. Start up Docker
     ```
     docker compose up -d
     ```
-4. Run Sequelize migrations and seeds
+6. Run Sequelize migrations and seeds
     ```
     npm run init
     ```
-5. Run server
+7. Run server
     ```
     npm run dev
     ```
