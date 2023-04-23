@@ -2,7 +2,7 @@
   "ts-node": {
     "files": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/setup/s3.setup.mjs"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/services/s3.setup.mjs"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

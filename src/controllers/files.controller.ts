@@ -1,7 +1,11 @@
 import { Response } from 'express'
-import { EFileStatus, RequestWithUserContext } from '../types/shared.types'
+import {
+  EFileStatus,
+  IDatabase,
+  RequestWithUserContext,
+} from '../types/shared.types'
 import { Error } from '../errors'
-import { uploadAudio } from '../setup/s3.setup'
+import { uploadAudio } from '../services/s3.service'
 import { AWS_BUCKET_NAME, AWS_S3_ENDPOINT } from '../config'
 
 export interface IFileController {
@@ -10,7 +14,7 @@ export interface IFileController {
   create: (req: RequestWithUserContext, res: Response) => Promise<void>
 }
 
-export const initFileController = (db: any): IFileController => {
+export const initFileController = (db: IDatabase): IFileController => {
   const index = async (req: RequestWithUserContext, res: Response) => {
     const userId = req.context?.user?.id
 
@@ -34,11 +38,16 @@ export const initFileController = (db: any): IFileController => {
 
     try {
       const file = await db.File.findByPk(id, {
-        where: { userId },
         include: {
           model: db.Category,
         },
       })
+      if (file?.userId !== userId) {
+        res
+          .status(Error.INVALID_OPERATION.httpCode)
+          .send(Error.INVALID_OPERATION)
+        return
+      }
       res.send({ file })
     } catch (err) {
       res.status(500).send(err)
@@ -46,7 +55,7 @@ export const initFileController = (db: any): IFileController => {
   }
 
   const create = async (req: RequestWithUserContext, res: Response) => {
-    const userId = req.context?.user?.id
+    const userId = req.context?.user?.id!
     const { description, categoryId } = req.body
 
     const category = await db.Category.findByPk(categoryId)

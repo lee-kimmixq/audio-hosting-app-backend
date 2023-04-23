@@ -1,11 +1,12 @@
 import { Request, Response } from 'express'
+import { IDatabase } from '../types/shared.types'
 
 export interface ICategoryController {
   index: (_: Request, res: Response) => Promise<void>
   create: (req: Request, res: Response) => Promise<void>
 }
 
-export const initCategoryController = (db: any): ICategoryController => {
+export const initCategoryController = (db: IDatabase): ICategoryController => {
   const index = async (_: Request, res: Response) => {
     try {
       const categories = await db.Category.findAll({ order: [['name', 'ASC']] })

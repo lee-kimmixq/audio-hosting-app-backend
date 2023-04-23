@@ -1,7 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
+import { IUserModel } from '../../types/shared.types'
 
 export const initUserModel = (sequelize: Sequelize) =>
-  sequelize.define(
+  sequelize.define<IUserModel>(
     'user',
     {
       id: {

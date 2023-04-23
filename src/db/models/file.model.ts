@@ -1,7 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
+import { IFileModel } from '../../types/shared.types'
 
 export const initFileModel = (sequelize: Sequelize) =>
-  sequelize.define(
+  sequelize.define<IFileModel>(
     'file',
     {
       id: {

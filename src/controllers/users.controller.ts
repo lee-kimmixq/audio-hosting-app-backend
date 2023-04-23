@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { JWT_TOKEN_KEY } from '../config'
 import { ACCESS_COOKIE_NAME } from '../constants'
 import { Error } from '../errors'
-import { RequestWithUserContext } from '../types/shared.types'
+import { IDatabase, RequestWithUserContext } from '../types/shared.types'
 import { getHash } from '../utils'
 
 export interface IUserController {
@@ -16,7 +16,7 @@ export interface IUserController {
   checkAuth: (_: RequestWithUserContext, res: Response) => Promise<void>
 }
 
-export const initUserController = (db: any): IUserController => {
+export const initUserController = (db: IDatabase): IUserController => {
   const login = async (req: Request, res: Response) => {
     try {
       const { username, password } = req.body
@@ -91,7 +91,7 @@ export const initUserController = (db: any): IUserController => {
       }
 
       const userId = req.context?.user?.id
-      const user = await db.User.findOne({ where: { id: userId } })
+      const user = (await db.User.findOne({ where: { id: userId } }))!
 
       const hashedPassword = getHash(newPassword)
       user.update({ password: hashedPassword, updatedAt: new Date() })
@@ -107,7 +107,7 @@ export const initUserController = (db: any): IUserController => {
       const { password } = req.body
 
       const userId = req.context?.user?.id
-      const user = await db.User.findOne({ where: { id: userId } })
+      const user = (await db.User.findOne({ where: { id: userId } }))!
 
       if (user.password !== getHash(password)) {
         res

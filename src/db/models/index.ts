@@ -5,6 +5,7 @@ import {
   POSTGRES_PASSWORD,
   POSTGRES_USER,
 } from '../../config'
+import { IDatabase } from '../../types/shared.types'
 
 import { initCategoryModel } from './category.model'
 import { initFileModel } from './file.model'
@@ -20,7 +21,7 @@ export const sequelize = new Sequelize(
   }
 )
 
-const db = {
+const db: IDatabase = {
   sequelize,
   Sequelize,
   User: initUserModel(sequelize),

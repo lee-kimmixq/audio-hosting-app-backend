@@ -1,7 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
+import { ICategoryModel } from '../../types/shared.types'
 
 export const initCategoryModel = (sequelize: Sequelize) =>
-  sequelize.define(
+  sequelize.define<ICategoryModel>(
     'category',
     {
       id: {
