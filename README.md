@@ -1,13 +1,13 @@
 # audio-hosting-app-backend
 
 ## To start up local server
-1. Ensure you have the required environment variables in `.env`
+1. Ensure you have the required environment variables in `.env` (refer to `.env.example`)
 2. Ensure that no other local instances of PostgreSQL are running
 3. Install npm packages
     ```
     npm install
     ```
-4. Clean volumes
+4. Clean volumes (if not fresh repo)
     ```
     npm run clean
     ```
