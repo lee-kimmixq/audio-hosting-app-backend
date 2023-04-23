@@ -1,8 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
 
-export const initUserModel = (sequelize: Sequelize) =>
+export const initFileModel = (sequelize: Sequelize) =>
   sequelize.define(
-    'user',
+    'file',
     {
       id: {
         primaryKey: true,
@@ -10,12 +10,24 @@ export const initUserModel = (sequelize: Sequelize) =>
         allowNull: false,
         defaultValue: DataTypes.UUIDV4,
       },
-      username: {
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      path: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      password: {
-        type: DataTypes.STRING,
+      status: {
+        type: DataTypes.ENUM('UPLOADING', 'UPLOADED', 'DELETED'),
         allowNull: false,
       },
       createdAt: {

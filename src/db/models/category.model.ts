@@ -1,8 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
 
-export const initUserModel = (sequelize: Sequelize) =>
+export const initCategoryModel = (sequelize: Sequelize) =>
   sequelize.define(
-    'user',
+    'category',
     {
       id: {
         primaryKey: true,
@@ -10,11 +10,7 @@ export const initUserModel = (sequelize: Sequelize) =>
         allowNull: false,
         defaultValue: DataTypes.UUIDV4,
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
