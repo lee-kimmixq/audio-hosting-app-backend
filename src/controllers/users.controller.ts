@@ -13,6 +13,7 @@ export interface IUserController {
   logout: (_: Request, res: Response) => Promise<void>
   changePassword: (req: RequestWithUserContext, res: Response) => Promise<void>
   deleteAccount: (req: RequestWithUserContext, res: Response) => Promise<void>
+  checkAuth: (_: RequestWithUserContext, res: Response) => Promise<void>
 }
 
 export const initUserController = (db: any): IUserController => {
@@ -74,7 +75,7 @@ export const initUserController = (db: any): IUserController => {
   }
 
   const logout = async (_: Request, res: Response) => {
-    res.clearCookie('jwt')
+    res.clearCookie(ACCESS_COOKIE_NAME)
     res.send({ logout: true })
   }
 
@@ -123,5 +124,9 @@ export const initUserController = (db: any): IUserController => {
     }
   }
 
-  return { login, signup, logout, changePassword, deleteAccount }
+  const checkAuth = async (_: Request, res: Response) => {
+    res.send({ auth: true })
+  }
+
+  return { login, signup, logout, changePassword, deleteAccount, checkAuth }
 }
