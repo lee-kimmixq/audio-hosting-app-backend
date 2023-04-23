@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "scripts": {
     "clean": "node clean.js",
-    "dev": "npx tsc && nodemon ./build/index.js",
+    "dev": "npx tsc && nodemon ./build/index.js -e ts",
     "init": "npx tsc && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
