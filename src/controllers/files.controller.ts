@@ -1,6 +1,8 @@
 import { Response } from 'express'
 import { EFileStatus, RequestWithUserContext } from '../types/shared.types'
 import { Error } from '../errors'
+import { uploadAudio } from '../setup/s3.setup'
+import { AWS_BUCKET_NAME, AWS_S3_ENDPOINT } from '../config'
 
 export interface IFileController {
   index: (req: RequestWithUserContext, res: Response) => Promise<void>
@@ -45,7 +47,7 @@ export const initFileController = (db: any): IFileController => {
 
   const create = async (req: RequestWithUserContext, res: Response) => {
     const userId = req.context?.user?.id
-    const { description, path, categoryId } = req.body
+    const { description, categoryId } = req.body
 
     const category = await db.Category.findByPk(categoryId)
     if (!category) {
@@ -55,11 +57,15 @@ export const initFileController = (db: any): IFileController => {
       return
     }
 
+    const filename = req.file?.originalname
+    const file = req.file?.buffer
+    await uploadAudio(filename, file)
+
     try {
       const file = await db.File.create({
         userId,
         description,
-        path,
+        path: `${AWS_S3_ENDPOINT}${AWS_BUCKET_NAME}/${AWS_BUCKET_NAME}/${filename}`,
         status: EFileStatus.UPLOADING,
       })
       await file.setCategories([categoryId])

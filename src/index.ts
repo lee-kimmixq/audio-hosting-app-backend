@@ -18,10 +18,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 
-app.get('/test', (_, res) => {
-  res.send('TEST works')
-})
-
 bindRoutes(app)
 
 app.listen(PORT)

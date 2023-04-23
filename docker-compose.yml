@@ -11,6 +11,10 @@ services:
       - DEBUG=${DEBUG-}
       - DOCKER_HOST=unix:///var/run/docker.sock
       - SERVICES=s3
+      - DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - EDGE_PORT=4566
+      - HOSTNAME_EXTERNAL=localstack
+      - PERSISTENCE=/var/lib/localstack/state
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -30,3 +34,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  aws_setup:
+    image: mesosphere/aws-cli
+    environment:
+      - AWS_ACCESS_KEY_ID=accessKey
+      - AWS_SECRET_ACCESS_KEY=secretKey
+      - AWS_DEFAULT_REGION=ap-southeast-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        timeout nc -v -z localstack 4566;
+        aws --endpoint-url=http://localstack:4566 s3 mb s3://${AWS_BUCKET_NAME}
+        aws --endpoint-url="http://localstack:4566" s3 ls
+      "
+    depends_on:
+      - localstack

@@ -21,6 +21,11 @@ export const {
   POSTGRES_DB = required('POSTGRES_DB'),
   SALT = required('SALT'),
   JWT_TOKEN_KEY = required('JWT_TOKEN_KEY'),
+  AWS_ACCESS_KEY_ID = required('AWS_ACCESS_KEY_ID'),
+  AWS_SECRET_ACCESS_KEY = required('AWS_SECRET_ACCESS_KEY'),
+  AWS_DEFAULT_REGION = required('AWS_DEFAULT_REGION'),
+  AWS_BUCKET_NAME = required('AWS_BUCKET_NAME'),
+  AWS_S3_ENDPOINT = required('AWS_S3_ENDPOINT'),
 } = process.env
 
 if (missingVariables.length) {
