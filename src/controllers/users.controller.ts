@@ -118,6 +118,7 @@ export const initUserController = (db: any): IUserController => {
 
       user.destroy()
 
+      res.clearCookie(ACCESS_COOKIE_NAME)
       res.send({ deleteAccount: true })
     } catch (err) {
       res.status(500).send(err)
