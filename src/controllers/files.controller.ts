@@ -10,7 +10,6 @@ import { AWS_BUCKET_NAME, AWS_S3_ENDPOINT } from '../config'
 
 export interface IFileController {
   index: (req: RequestWithUserContext, res: Response) => Promise<void>
-  view: (req: RequestWithUserContext, res: Response) => Promise<void>
   create: (req: RequestWithUserContext, res: Response) => Promise<void>
 }
 
@@ -27,28 +26,6 @@ export const initFileController = (db: IDatabase): IFileController => {
         },
       })
       res.send({ files })
-    } catch (err) {
-      res.status(500).send(err)
-    }
-  }
-
-  const view = async (req: RequestWithUserContext, res: Response) => {
-    const userId = req.context?.user?.id
-    const { id } = req.params
-
-    try {
-      const file = await db.File.findByPk(id, {
-        include: {
-          model: db.Category,
-        },
-      })
-      if (file?.userId !== userId) {
-        res
-          .status(Error.INVALID_OPERATION.httpCode)
-          .send(Error.INVALID_OPERATION)
-        return
-      }
-      res.send({ file })
     } catch (err) {
       res.status(500).send(err)
     }
@@ -84,5 +61,5 @@ export const initFileController = (db: IDatabase): IFileController => {
     }
   }
 
-  return { index, view, create }
+  return { index, create }
 }
