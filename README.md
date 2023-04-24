@@ -1,4 +1,6 @@
-# audio-hosting-app-backend
+# Audio Hosting App Backend
+
+[Link to frontend repo](https://github.com/lee-kimmixq/audio-hosting-app-frontend)
 
 ## To run
 1. Ensure you have the required environment variables in `.env` (refer to `.env.example`)
