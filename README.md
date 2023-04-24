@@ -1,25 +1,30 @@
 # audio-hosting-app-backend
 
-## To start up local server
+## To run
 1. Ensure you have the required environment variables in `.env` (refer to `.env.example`)
 2. Ensure that no other local instances of PostgreSQL are running
-3. Install npm packages
+3. Ensure that aha-frontend-image exists (run `npm run docker:build` in frontend repo)
+4. Install npm packages
     ```
     npm install
     ```
-4. Clean volumes (if not fresh repo)
+5. Clean volumes (if not fresh repo)
     ```
     npm run clean
     ```
-5. Start up Docker
+6. Start up Docker
     ```
-    docker compose up -d
+    npm run docker:start
     ```
-6. Run Sequelize migrations and seeds
+7. Run Sequelize migrations and seeds
     ```
     npm run init
     ```
-7. Run server
-    ```
-    npm run dev
-    ```
+
+## Test credentials for login
+```
+{
+    "username": "dummyboy",
+    "password": "dummyboy"
+}
+```

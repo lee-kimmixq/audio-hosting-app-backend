@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize'
 import {
-  HOST,
   POSTGRES_DB,
+  POSTGRES_HOST,
   POSTGRES_PASSWORD,
   POSTGRES_USER,
 } from '../../config'
@@ -16,7 +16,7 @@ export const sequelize = new Sequelize(
   POSTGRES_USER!,
   POSTGRES_PASSWORD!,
   {
-    host: HOST!,
+    host: POSTGRES_HOST!,
     dialect: 'postgres',
   }
 )
